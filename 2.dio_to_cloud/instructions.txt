@@ -1,0 +1,48 @@
+2. Digital Input/Output to Cloud
+
+2.1 Test Postman (shown on screen)
+- Login to TDC-X
+- F12 and extract token
+- Open Postman
+- Authorization -> Bearer Token type and paste it
+- Checkout possibilities, try it out
+
+2.2 Read DIOs
+- Get back to Visual Studio /myapp/main.go from task 1
+- Create folder pkg
+- Get dio.proto from git or documentation on TDC-X and put it in pkg folder
+- run commands to get protobuf compiler
+go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
+go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+export PATH="$PATH:$(go env GOPATH)/bin"
+apt install -y protobuf-compiler
+- Generate Proto Code
+protoc --go_out=pkg --go-grpc_out=pkg pkg/dio.proto
+- Go back to main.go (either use Copilot - prompt below, or copy main_1.go and run command to build
+Generate code that connects to /var/run/hal/hal.sock and create a function that sets DIO_D to high state. In main function call that once at start. 
+Then generate a function that reads all other inputs and outputs and outputs them as a joined json format in one line, with states 0 and 1 respectivly.
+Make that read function execute every 1 second.
+
+Connect cable, find out which is DIO_D and connect to other inputs and watch other inputs change from 0 to 1
+
+2.3. Send to Cloud
+- go to link https://demo.analytics.sentio.sick.com/
+- Add new asset of type TDC-X
+- Click on assets three dots and then integration
+- Generate token. 
+- Get back to main.go (either use Copilot - prompt below, or copy main_2.go and run command to build
+Add a sendToCloud function that accepts json data as an argument and string key as an argument. 
+HTTP method POST is used to endpoint https://demo-ingate.analytics.sentio.sick.com/platform/api/v1/ingest/260f1722-9840-4ecd-8e4e-3066ee9e9207/bulk with authorization token "DeviceApiKey eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNjBmMTcyMi05ODQwLTRlY2QtOGU0ZS0zMDY2ZWU5ZTkyMDciLCJqdGkiOiI5ZThjZDJkMi02ZWYxLTQ5M2ItOTk4My03MjZmNzA3MDQ2NmUiLCJ0aWQiOiI3ZGI3NzU4ZC00YzExLTQ5MWYtODlkOS1kNjk4NDEzN2NhYjMiLCJleHAiOjI3MjI2Nzc4NzcsImlzcyI6Imh0dHA6Ly9pb3QuaW8iLCJhdWQiOiJJb1QifQ.EwVztIix31kgGeYu34PAkipsEF6yi4QGz05zU55f6yU".
+Content-Type is application/json.
+Payload format is [{"data":[{<json_argument>}],"link":{"key": <key_argument>}}]
+HTTP 202 status code is expected.
+Also add every 10 seconds sending to cloud dio json data with dio key.
+- Running the application should send data to Cloud. Go back to Cloud to check data
+- There should be notification in top corner, click it, and click on the device. There should be new device to Register.
+- Click Register and You should see payload of Your digital IOs.
+- Since we dont have type, we will create one. Copy the payload in current view.
+- Go in the menu to Templates and add one (Device template). Add from script, paste payload and click small save button. Follow the steps to create template.
+- Get back to register page, and register device as You new template.
+
+Connect cable, find out which is DIO_D and connect to other inputs and watch other inputs change from 0 to 1 on Cloud.
+

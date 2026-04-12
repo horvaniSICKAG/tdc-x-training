@@ -1,0 +1,39 @@
+3. Leaf sensor to Cloud with chaning LED'sensor
+
+cd..
+mkdir leafproject
+- Go to remote SSH extension and open in new Window, then open folder leafproject
+
+What should this project do?
+Leaf sensor gives humidity and temperature thourgh Serial (RS485) Modbus protocol. Read  both values and send them to cloud. Also implement LED triggering:
+Humidity less then 10% - All LEDs are off
+Humidity higher then 10% less then 40% - Led1 on
+Humidity higher then 40% less then 70% - Led1, Led2 on
+Humidity higher then 70% - Led1, Led2, Led3 on
+
+
+Try doing on Your own. If You get stuck, ask questions, follow instructions (copilot queries).
+
+- Copy led.proto to /pkg
+export PATH="$PATH:$(go env GOPATH)/bin"
+protoc --go_out=pkg --go-grpc_out=pkg pkg/led.proto
+- Query copilot
+Create function that has two arguments, one is which led (FUNCT1,FUNCT2,FUNCT3), other is 0 or 1 to turn it of and on.
+gRPC is queried via /var/run/hal/hal.sock.
+Create other function that reads temperature and humidity from Rika Leaf Sensor which is modbus rs485 device.
+Serial port is /dev/ttyUSB0, baud is 9600, slaveId 254. Start address is 0, quantity is 2 and decoding is 
+humidity := (float64(results[0])*255 + float64(results[1])) / 10.0
+temperature := (float64(results[2])*255 + float64(results[3])) / 10.0
+In main function create flow:
+Humidity less then 10% - All LEDs are off
+Humidity higher then 10% less then 40% - Led1 on
+Humidity higher then 40% less then 70% - Led1, Led2 on
+Humidity higher then 70% - Led1, Led2, Led3 on
+This is done every 1 second.
+- Add sending to Cloud every 10 seconds
+- Add MPB10 Iolink sensor
+- Add MPB10 IODD to TDCX UI
+- Add reading of MPB 10 temperature to Rika leaf sensor and send to Cloud as well
+
+
+

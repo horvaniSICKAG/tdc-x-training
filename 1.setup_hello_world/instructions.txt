@@ -1,0 +1,43 @@
+1. Setting up developers environment
+
+- Login to TDC-X
+- SSH server on
+- Download key
+- Check internet connection
+- Login via SSH and install recommended-tools (select all)
+install-recommended-tools.sh
+- Open/Install VSCode
+- Install "Remote - SSH" extension
+- Open RemoteSSH extension and add new connection
+operator@<ip_address>
+- Specify config file (example)
+Host 192.168.0.100
+  HostName 192.168.0.100
+  User operator
+  IdentityFile "C:/Users/horvani/Downloads/private_key.pem"
+- Create file main.go in folder myapp
+/myapp/main.go
+- Write hello world app (ask Copilot, or check main.go file)
+go run main.go
+
+
+
+
+- If You get "fork/exec" error, run again or if You want to get rid of that:
+export TMPDIR=/home/operator/tmp && mkdir -p $TMPDIR && go run main.go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

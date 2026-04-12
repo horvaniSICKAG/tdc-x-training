@@ -1,0 +1,9 @@
+services:
+  leaf-app:
+    image: leaf:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/hal:/var/run/hal
+      - /run/iolink/iolink-api.sock:/run/iolink/iolink-api.sock
+    devices:
+      - /dev/serial/by-id/tdcx-serial:/dev/ttyUSB0

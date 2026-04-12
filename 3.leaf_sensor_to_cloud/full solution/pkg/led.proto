@@ -1,0 +1,69 @@
+/**
+ * LED Control Service.
+ *
+ * Service that enables user to control LEDs
+ */
+
+syntax = "proto3";
+
+package hal.ledcontrol;
+
+import "google/protobuf/empty.proto";
+
+option go_package = "./protos;protos";
+
+service LedControl {
+    // List all available LEDs
+    rpc ListLeds(google.protobuf.Empty) returns (LedListResponse);
+
+    // List all available triggers
+    rpc ListAvailableTriggers(google.protobuf.Empty) returns (ListAvailableTriggersResponse);
+
+    // Get the current state of a specific LED
+    rpc GetState(LedNameRequest) returns (LedStateResponse);
+ 
+    // Set trigger of a specific LED
+    rpc SetTrigger(LedTriggerRequest) returns (google.protobuf.Empty);
+ 
+    // Turn a specific LED on or off
+    rpc SetState(SetStateRequest) returns (google.protobuf.Empty);
+}
+ 
+message LedNameRequest {
+    string ledName = 1;
+}
+
+message TriggerRequest {
+    string trigger = 1;
+}
+ 
+message LedListResponse {
+    repeated LedNameRequest ledNames = 1;
+}
+
+enum OnState {
+    OFF = 0;
+    ON = 1;
+    ERR = 2;
+}
+
+message ListAvailableTriggersResponse {
+    repeated string triggers = 1;
+}
+
+message LedStateResponse {
+    OnState state = 1;
+    string trigger = 2;
+    optional string color = 3;
+}
+
+message LedTriggerRequest {
+    string ledName = 1;
+    string trigger = 2;
+}
+
+message SetStateRequest {
+    string ledName = 1;
+    bool state = 2;
+    optional string color = 3;
+}
