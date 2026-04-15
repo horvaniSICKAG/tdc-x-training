@@ -1,2 +1,13 @@
-5. SDG application 
+5. SDG application
 
+- Download SDG application from SA
+- Upload to TDC-adminadmin123X
+- MPB10 data (notification) should be visible
+- Register MPB10 device
+
+- Open SDG UI
+- Go to Ethernet devices under menu
+- CoLa scan will find Your FTMG
+- Click on configure button on FTMG and give it correct broker settings
+- Data will go to SA Cloud directly
+- Register FTMg device
