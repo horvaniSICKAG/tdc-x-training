@@ -1,6 +1,8 @@
 1. Setting up developers environment
 
 - Login to TDC-X
+admin
+adminadmin123X.
 - SSH server on
 - Download key
 - Check internet connection
