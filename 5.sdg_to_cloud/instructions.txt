@@ -5,9 +5,15 @@
 - MPB10 data (notification) should be visible
 - Register MPB10 device
 
-- Open SDG UI
-- Go to Ethernet devices under menu
-- CoLa scan will find Your FTMG
-- Click on configure button on FTMG and give it correct broker settings
+- Go go to Ethernet FTMg IP address
+- Login as maintenance (pw: airflowsensor)
+- Enable MQTT service
+- Set MQTT ProcessData Format to user defined (legacy)
+- Set what to send as (OFF, ON, ON, ON ..., ON, ON, OFF)
+- Configure correct IP address and broker of SDG broker (TDC-X ip, port 1884)
 - Data will go to SA Cloud directly
 - Register FTMg device
+
+- Open SDG UI
+- Check statuses
+- You can disable internet connection to start offline cache, just to see it work
