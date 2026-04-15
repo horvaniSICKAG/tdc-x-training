@@ -1,5 +1,11 @@
 6. NodeRed to Cloud
 
+With documentation try to setup gRPC call to any resource.
+
+Send that data (JSON) to any topic on SDG broker
+(host.docker.internal 1884)
+
+If topic starts with external/* SDG will automatically send it to Cloud
 
 
 
